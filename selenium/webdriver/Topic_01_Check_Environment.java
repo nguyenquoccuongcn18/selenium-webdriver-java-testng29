@@ -26,17 +26,18 @@ public class Topic_01_Check_Environment {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        driver.get("https://www.facebook.com/");
+        driver.get("http://betalogistic.thegioididong.com/");
     }
 
     @Test
     public void TC_01_Url() {
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/");
+        Assert.assertEquals(driver.getCurrentUrl(), "http://betalogistic.thegioididong.com/");
     }
 
     @Test
     public void TC_02_Logo() {
-        Assert.assertTrue(driver.findElement(By.cssSelector("img.fb_logo")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("Username")).isDisplayed());
+//test
     }
 
     @Test
