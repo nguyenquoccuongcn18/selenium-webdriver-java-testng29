@@ -11,6 +11,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import javax.lang.model.element.Element;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Topic03_Selenium_Relative_Locator {
@@ -55,7 +57,7 @@ public class Topic03_Selenium_Relative_Locator {
         //Password texbox 'nằm dưới below'
         By Password = By.id("Password");
 
-
+        //RelativeLocator : dùng để test về giao diện
         // label - nằm trên LoginButtonBy và bên phải RememberMeCheckBoxBy là  Remember me? và nằm bên trái forgotpassword
         WebElement RememberMeTextElement = driver
                 .findElement(RelativeLocator.with(By.tagName("label"))
@@ -67,6 +69,10 @@ public class Topic03_Selenium_Relative_Locator {
                 ;
         // in ra được text mà mình muốn tìm
         System.out.println(RememberMeTextElement.getText());
+
+        //
+       //List <WebElement> Atterlink = driver.findElement(RelativeLocator.with(By.tagName(a));
+        //System.out.println(Atterlink.size());
 
     }
 
