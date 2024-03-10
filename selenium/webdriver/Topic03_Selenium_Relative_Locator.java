@@ -55,15 +55,17 @@ public class Topic03_Selenium_Relative_Locator {
         //Password texbox 'nằm dưới below'
         By Password = By.id("Password");
 
+
         // label - nằm trên LoginButtonBy và bên phải RememberMeCheckBoxBy là  Remember me? và nằm bên trái forgotpassword
         WebElement RememberMeTextElement = driver
                 .findElement(RelativeLocator.with(By.tagName("label"))
-                .above(loginButtonBy)
-                .toRightOf(RememberMeCheckBoxBy)
-                .toLeftOf(forgotPasswordLink)
-                .below(Password))
+                .above(loginButtonBy)                                   //nằm bên trên
+                .toRightOf(RememberMeCheckBoxBy)                        //nằm bên phải
+                .toLeftOf(forgotPasswordLink)                           //nằm bên trái
+                .below(Password)                                        // nằm dưới
+                .near(forgotPasswordLink))                              // near nằm bên cạnh
                 ;
-
+        // in ra được text mà mình muốn tìm
         System.out.println(RememberMeTextElement.getText());
 
     }
