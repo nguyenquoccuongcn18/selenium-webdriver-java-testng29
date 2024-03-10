@@ -3,6 +3,8 @@ package webdriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.AfterClass;
@@ -19,12 +21,13 @@ public class Topic03_Selenium_Relative_Locator {
     @BeforeClass
     public void beforeClass() {
         if (osName.contains("Windows")) {
-            System.setProperty("webdriver.chrome.driver", projectPath + "\\browserDrivers\\chromedriver.exe");
+            System.setProperty("webdriver.msedge.driver", projectPath + "\\browserDrivers\\msedgedriver.exe");
         } else {
-            System.setProperty("webdriver.chrome.driver", projectPath + "/browserDrivers/chromedriver");
+            System.setProperty("webdriver.msedge.driver", projectPath + "/browserDrivers/msedgedriver");
         }
 
-        driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
+        driver = new EdgeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("https://demo.nopcommerce.com/login?returnUrl=%2Fregister");
@@ -34,22 +37,33 @@ public class Topic03_Selenium_Relative_Locator {
     @Test
     public void TC_01_Url() {
         //Login button
-        By LoginButtonBy = By.cssSelector("button-loginbutton");
-        WebElement LoginbuttonbtElement = driver.findElement(By.cssSelector("button.login-button"));
+        By loginButtonBy = By.cssSelector("button.login-button");
+        WebElement LoginButtonbtElement = driver.findElement(By.cssSelector("button.login-button"));
 
          // above nằm trên Loginbuttonby login button
-        RelativeLocator.with(By.tagName("label")).above(LoginButtonBy);
+        RelativeLocator.with(By.tagName("label")).above(loginButtonBy);
         //Element
-        RelativeLocator.with(By.tagName("label")).above(LoginbuttonbtElement);
+        RelativeLocator.with(By.tagName("label")).above(LoginButtonbtElement);
 
-        //Remmemberme checkbox
+
+        //Forgot Password Link 'Nằm bên trái'
+        WebElement forgotPasswordLink = driver.findElement(By.cssSelector("span.forgot-password"));
+
+        //Remmemberme checkbox 'nằm bên phải'
         By RememberMeCheckBoxBy = By.id("RememberMe");
 
-        // label - nằm trên LoginButtonBy và bên phải RememberMeCheckBoxBy là  Remember me?
+        //Password texbox 'nằm dưới below'
+        By Password = By.id("Password");
+
+        // label - nằm trên LoginButtonBy và bên phải RememberMeCheckBoxBy là  Remember me? và nằm bên trái forgotpassword
         WebElement RememberMeTextElement = driver
                 .findElement(RelativeLocator.with(By.tagName("label"))
-                .above(LoginButtonBy)
-                .toRightOf(RememberMeCheckBoxBy));
+                .above(loginButtonBy)
+                .toRightOf(RememberMeCheckBoxBy)
+                .toLeftOf(forgotPasswordLink)
+                .below(Password))
+                ;
+
         System.out.println(RememberMeTextElement.getText());
 
     }

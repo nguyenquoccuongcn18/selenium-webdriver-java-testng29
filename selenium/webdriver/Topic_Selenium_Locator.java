@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chromium.ChromiumDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -21,12 +23,12 @@ public class Topic_Selenium_Locator  {
     @BeforeClass
     public void beforeClass() {
         if (osName.contains("Windows")) {
-            System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
+            System.setProperty("webdriver.Chrome.driver", projectPath + "\\browserDrivers\\chromedriver.exe");
         } else {
-            System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
+            System.setProperty("webdriver.Chrome.driver", projectPath + "/browserDrivers/chromedriver");
         }
 
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("https://demo.nopcommerce.com/register");

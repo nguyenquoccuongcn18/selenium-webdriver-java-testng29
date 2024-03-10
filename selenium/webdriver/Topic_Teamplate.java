@@ -4,6 +4,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chromium.ChromiumDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -18,12 +22,14 @@ public class Topic_Teamplate {
     @BeforeClass
     public void beforeClass() {
         if (osName.contains("Windows")) {
-            System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
+            System.setProperty("webdriver.msedge.driver", projectPath + "\\browserDrivers\\msedgedriver.exe");
         } else {
-            System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
+            System.setProperty("webdriver.msedge.driver", projectPath + "/browserDrivers/msedgedriver");
+
         }
 
-        driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
+        driver = new EdgeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("https://www.facebook.com/");
