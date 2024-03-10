@@ -19,9 +19,9 @@ public class Topic03_Selenium_Relative_Locator {
     @BeforeClass
     public void beforeClass() {
         if (osName.contains("Windows")) {
-            System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
+            System.setProperty("webdriver.chrome.driver", projectPath + "\\browserDrivers\\chromedriver.exe");
         } else {
-            System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
+            System.setProperty("webdriver.chrome.driver", projectPath + "/browserDrivers/chromedriver");
         }
 
         driver = new FirefoxDriver();
@@ -34,9 +34,24 @@ public class Topic03_Selenium_Relative_Locator {
     @Test
     public void TC_01_Url() {
         //Login button
-        By Loginbuttonby = By.cssSelector("button-loginbutton");
-        WebElement Loginbutton = driver.findElement(By.cssSelector("button.login-button"));
-        RelativeLocator.with(By.tagName("label"));
+        By LoginButtonBy = By.cssSelector("button-loginbutton");
+        WebElement LoginbuttonbtElement = driver.findElement(By.cssSelector("button.login-button"));
+
+         // above nằm trên Loginbuttonby login button
+        RelativeLocator.with(By.tagName("label")).above(LoginButtonBy);
+        //Element
+        RelativeLocator.with(By.tagName("label")).above(LoginbuttonbtElement);
+
+        //Remmemberme checkbox
+        By RememberMeCheckBoxBy = By.id("RememberMe");
+
+        // label - nằm trên LoginButtonBy và bên phải RememberMeCheckBoxBy là  Remember me?
+        WebElement RememberMeTextElement = driver
+                .findElement(RelativeLocator.with(By.tagName("label"))
+                .above(LoginButtonBy)
+                .toRightOf(RememberMeCheckBoxBy));
+        System.out.println(RememberMeTextElement.getText());
+
     }
 
     @Test
