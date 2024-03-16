@@ -97,11 +97,7 @@ public class Part2_Xpath_CSS_End {
         Assert.assertEquals(driver.findElement(By.id("txtPassword-error")).getText(),"Mật khẩu phải có ít nhất 6 ký tự");
         Assert.assertEquals(driver.findElement(By.id("txtCPassword-error")).getText(),"Mật khẩu phải có ít nhất 6 ký tự");
 
-        //clear dữ liệu nhập lại cái mới
-        driver.findElement(By.id("txtPassword")).clear();
-        driver.findElement(By.id("txtCPassword")).clear();
-       // driver.findElement(By.id("txtPassword")).sendKeys("12345");
-        //driver.findElement(By.id("txtCPassword")).sendKeys("11112");
+
     }
     @Test
     public void Register_05_Invalid_Confirm_Password() {
