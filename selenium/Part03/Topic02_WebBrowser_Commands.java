@@ -4,7 +4,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.logging.LogType;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
@@ -26,7 +25,7 @@ public class Topic02_WebBrowser_Commands {
     //** thường xuyên sử dụng
     //*  ít sử dụng
 
-    @BeforeClass
+
     public void beforeclass(){
         //M:method C:class i:interface E:Enum A:astract class @:annotation
         //Muốn dùng đựược thì phải khởi tạo
