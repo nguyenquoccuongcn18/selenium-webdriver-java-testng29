@@ -170,7 +170,7 @@ public class Topic05_WebBrowser_WebElement_Exercise02 {
         Assert.assertTrue(driver.findElement(By.cssSelector("li[class='8-char not-completed']")).isDisplayed());
         Assert.assertTrue(driver.findElement(By.cssSelector("li.username-check.completed")).isDisplayed());
 
-        //Nhập kí tự đặc biệt đủ 8 kí tự viết hoa
+        //Nhập kí tự đặc biệt đủ 8 kí tự viết hoa.
         driver.findElement(By.cssSelector("input#new_password")).clear();
         driver.findElement(By.cssSelector("input#new_password")).sendKeys("Addd$sfbd2143245");
 
