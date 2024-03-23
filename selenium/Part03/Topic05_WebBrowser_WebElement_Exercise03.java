@@ -1,5 +1,6 @@
 package Part03;
 
+import javaTester.Random_01;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.Random;
 
 
 public class Topic05_WebBrowser_WebElement_Exercise03 {
@@ -22,6 +24,7 @@ public class Topic05_WebBrowser_WebElement_Exercise03 {
         driver.manage().window().maximize();
         driver.get("http://live.techpanda.org/");
     }
+
     @Test
     public void TC_01_Emty_User_Password() {
         driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
@@ -36,7 +39,7 @@ public class Topic05_WebBrowser_WebElement_Exercise03 {
         driver.findElement(By.xpath("//div[@class='input-box']//input[@name='login[username]']")).sendKeys("123456@123.1223");
         driver.findElement(By.xpath("//div[@class='input-box']//input[@name='login[password]']")).sendKeys("123456");
         driver.findElement(By.xpath("//div[@class='buttons-set']//button")).click();
-        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-validate-email-email']")).getText(),("Please enter a valid email address. For example johndoe@domain.com."));
+        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-validate-email-email']")).getText(), ("Please enter a valid email address. For example johndoe@domain.com."));
 
     }
 
@@ -46,11 +49,13 @@ public class Topic05_WebBrowser_WebElement_Exercise03 {
 
         driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
 
-        driver.findElement(By.cssSelector("input#firstname")).sendKeys();
-        driver.findElement(By.cssSelector("input#lastname")).sendKeys();
-        driver.findElement(By.cssSelector("input#email_address")).sendKeys();
-        driver.findElement(By.cssSelector("input#password")).sendKeys();
-        driver.findElement(By.cssSelector("input#confirmation")).sendKeys();
+        String firtname ="Cuong", lastname ="Nguyen" ,emailAddress=getEmailaddress(),password= String.valueOf(12121212);
+
+        driver.findElement(By.cssSelector("input#firstname")).sendKeys(firtname);
+        driver.findElement(By.cssSelector("input#lastname")).sendKeys(lastname);
+        driver.findElement(By.cssSelector("input#email_address")).sendKeys(emailAddress);
+        driver.findElement(By.cssSelector("input#password")).sendKeys(password);
+        driver.findElement(By.cssSelector("input#confirmation")).sendKeys(password);
         driver.findElement(By.cssSelector("button[title='Register']")).click();
 
 
@@ -60,4 +65,20 @@ public class Topic05_WebBrowser_WebElement_Exercise03 {
     public void afterClass() {
         driver.quit();
     }
+
+    public void sleepInsecons(long timeInsecons) {
+        try {
+            Thread.sleep(timeInsecons * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getEmailaddress() {
+        Random_01 rand = new Random_01();
+        System.out.println(rand.NextInt(0));
+        return "RandomCuongTest" + new Random().nextInt(9999) + "Automation";
+
+    }
 }
+
