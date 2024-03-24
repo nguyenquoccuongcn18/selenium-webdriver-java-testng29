@@ -51,6 +51,9 @@ public class Topic05_WebBrowser_WebElement_Exercise03 {
 
         String firtname ="Cuong", lastname ="Nguyen" ,emailAddress=getEmailaddress(),password= String.valueOf(12121212);
 
+        String fullName = firtname + " " + lastname ;
+
+
         driver.findElement(By.cssSelector("input#firstname")).sendKeys(firtname);
         driver.findElement(By.cssSelector("input#lastname")).sendKeys(lastname);
         driver.findElement(By.cssSelector("input#email_address")).sendKeys(emailAddress);
@@ -58,6 +61,11 @@ public class Topic05_WebBrowser_WebElement_Exercise03 {
         driver.findElement(By.cssSelector("input#confirmation")).sendKeys(password);
         driver.findElement(By.cssSelector("button[title='Register']")).click();
 
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.welcome-msg strong")).getText(),"Hello," + " " + fullName + "!");
+
+
+        // get ra cái attribuite
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#email_address")).getAttribute("value"), firtname);
 
     }
 
