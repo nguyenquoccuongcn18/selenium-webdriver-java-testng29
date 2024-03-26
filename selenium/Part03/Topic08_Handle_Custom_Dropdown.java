@@ -46,17 +46,20 @@ public class Topic08_Handle_Custom_Dropdown {
 
         List<WebElement> AllItems =driver.findElements(By.cssSelector("ul#number-menu div"));
             //lưu trữ 19 cái item
-        //dùng for each cho số nhiều
+
+
+//1.3 nếu như item cần chọn có thì click vào
+// dùng for each cho số nhiều
         for (WebElement item : AllItems){
             String textItem = item.getText();
             System.out.println("Text item" + textItem);
             //nếu như =8  click vào thoát vòng lặp
             if (textItem.equals("18")){
                 item.click();
-                break;
+                break;//thoát vòng lặp
             }
         }
-        //1.3 nếu như item cần chọn có thì click vào
+
         //1.4 nếu như item phải cần scroll mới chọn đc (angular,react..)
         //1.5 Trc khi click cần ktra item đó đúng khong vaà click
 
