@@ -79,6 +79,11 @@ public class Topic07_Dropdown {
         driver.findElement(By.cssSelector("button#register-button")).click();
 
 
+        //verify dropdown xem có đúng không
+       // new Select(driver.findElement(By.name("DateOfBirthMonth"))).getFirstSelectedOption().getText();
+
+        Assert.assertEquals(new Select(driver.findElement(By.name("DateOfBirthMonth"))).getFirstSelectedOption().getText(),day);
+
 
 
     }
