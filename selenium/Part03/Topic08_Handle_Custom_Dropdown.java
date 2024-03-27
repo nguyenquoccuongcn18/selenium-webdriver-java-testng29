@@ -69,6 +69,13 @@ public class Topic08_Handle_Custom_Dropdown {
 
     @Test
     public void TC_02_Logo() {
+        ////Thay vì viết như trên mình tạo ra 1 hàm và sử dụng lại
+        SelectItemDropdown("//span[@id='number-button']" ,"ul#number-menu div", "16");
+        sleepInsecons(3);
+
+        driver.navigate().refresh();
+        SelectItemDropdown("//span[@id='number-button']" ,"ul#number-menu div", "18");
+
 
     }
 
@@ -84,6 +91,21 @@ public class Topic08_Handle_Custom_Dropdown {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //Những dữ liệu dùng để truyền vào gọi là tham số
+    public void SelectItemDropdown (String parrenCSS, String ChilrenCSS ,String ItemTextExpected){
+        driver.findElement(By.xpath(parrenCSS)).click();//"//span[@id='number-button']"
+        sleepInsecons(3);
+        explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(ChilrenCSS)));//"ul#number-menu div"
+        List<WebElement> AllItems =driver.findElements(By.cssSelector(ChilrenCSS));//"ul#number-menu div"
+            for (WebElement item : AllItems){
+            if (item.getText().equals(ItemTextExpected)){
+                item.click();
+                break;
+            }
+        }
+
     }
 
 
