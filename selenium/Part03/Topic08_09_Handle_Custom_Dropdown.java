@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -14,7 +15,7 @@ import java.time.Duration;
 import java.util.List;
 
 
-public class Topic08_Handle_Custom_Dropdown {
+public class Topic08_09_Handle_Custom_Dropdown {
     WebDriver driver;
 
    //Wait đến khi nào tìm được dữ liệu không cần sleep (wait tường minh có trạng thái cụ thể cho element)
@@ -27,7 +28,6 @@ public class Topic08_Handle_Custom_Dropdown {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().window().maximize();
-        driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
         explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
     }
@@ -68,13 +68,42 @@ public class Topic08_Handle_Custom_Dropdown {
     }
 
     @Test
-    public void TC_02_Logo() {
+    public void TC_02_Jquery() {
+        driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
         ////Thay vì viết như trên mình tạo ra 1 hàm và sử dụng lại
         SelectItemDropdown("//span[@id='number-button']" ,"ul#number-menu div", "16");
         sleepInsecons(3);
 
         driver.navigate().refresh();
+
         SelectItemDropdown("//span[@id='number-button']" ,"ul#number-menu div", "18");
+        Assert.assertEquals(driver.findElement(By.cssSelector("span#number-button>span.ui-selectmenu-text")).getText(),"18");
+
+
+    }
+
+    @Test
+    public void TC_03_React(){
+        driver.get("https://react.semantic-ui.com/maximize/dropdown-example-selection/");
+        SelectItemDropdown("i.dropdown.icon","span.text","Matt");
+        sleepInsecons(2);
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(),"Matt");
+
+    }
+
+    public void TC_04_VueJS(){
+        driver.get("https://mikerodham.github.io/vue-dropdowns/");
+        SelectItemDropdown("li.dropdown-toggle","ul.dropdown-menu a","Third Option");
+        sleepInsecons(2);
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.dropdown-toggle")).getText(),"Third Option");
+
+    }
+
+    @Test void TC_05_Editable(){
+        driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
+        SelectItemEditableDropdown("input.search","div.item span","Belgium");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(),"Belgium");
+
 
 
     }
@@ -94,12 +123,37 @@ public class Topic08_Handle_Custom_Dropdown {
     }
 
     //Những dữ liệu dùng để truyền vào gọi là tham số
+    //khi làm cho dự án khác với hành vi khác thì cần sửa lại hàm cho đúng với hành vi của dự án đó
     public void SelectItemDropdown (String parrenCSS, String ChilrenCSS ,String ItemTextExpected){
-        driver.findElement(By.xpath(parrenCSS)).click();//"//span[@id='number-button']"
+        driver.findElement(By.cssSelector(parrenCSS)).click();//"//span[@id='number-button']"
         sleepInsecons(3);
-        explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(ChilrenCSS)));//"ul#number-menu div"
-        List<WebElement> AllItems =driver.findElements(By.cssSelector(ChilrenCSS));//"ul#number-menu div"
+
+       // explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(ChilrenCSS)));//"ul#number-menu div"
+        //List<WebElement> AllItems =driver.findElements(By.cssSelector(ChilrenCSS));//"ul#number-menu div"
+            //Tối ưu code vừa Wait vừa tìm Element
+        List<WebElement> AllItems =explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(ChilrenCSS)));;
             for (WebElement item : AllItems){
+            if (item.getText().equals(ItemTextExpected)){
+                item.click();
+                break;
+            }
+        }
+
+    }
+
+
+
+
+    public void SelectItemEditableDropdown (String parrenCSS, String ChilrenCSS ,String ItemTextExpected){
+        driver.findElement(By.cssSelector(parrenCSS)).clear();//"//span[@id='number-button']"
+        driver.findElement(By.cssSelector(parrenCSS)).sendKeys(ItemTextExpected);
+        sleepInsecons(3);
+
+        // explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(ChilrenCSS)));//"ul#number-menu div"
+        //List<WebElement> AllItems =driver.findElements(By.cssSelector(ChilrenCSS));//"ul#number-menu div"
+        //Tối ưu code vừa Wait vừa tìm Element
+        List<WebElement> AllItems =explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(ChilrenCSS)));;
+        for (WebElement item : AllItems){
             if (item.getText().equals(ItemTextExpected)){
                 item.click();
                 break;
