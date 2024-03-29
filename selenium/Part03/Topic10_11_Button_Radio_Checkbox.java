@@ -83,9 +83,67 @@ public class Topic10_11_Button_Radio_Checkbox {
 
     }
 
+    @Test
+    public void TC_03_CheckBox(){
+        driver.get("https://demos.telerik.com/kendo-ui/checkbox/index");
+        By dualZoneCheckBox = By.xpath("//input[@id='eq3']");
+        By TrueCheckBox = By.xpath("//input[@id='eq1']");
+        sleepInsecons(5);
+
+        //case 1 : Nếu web mở ra check box chưa được chọn
+        CheckBoxElement(dualZoneCheckBox);
+
+        //case 2 : Nếu web mở ra checkbox đã được chọn
+        UnCheckBoxElement(TrueCheckBox);
+
+        Assert.assertFalse(driver.findElement(By.xpath("//input[@id='eq3']")).isSelected());
+        Assert.assertTrue(driver.findElement(By.xpath("//input[@id='eq1']")).isSelected());
+
+    }
+    @Test
+    public void TC_04_Radio(){
+        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
+        By TwoPetrolRadio = By.xpath("//input[@id='engine3']");
+        By NoTwoPetrolRadio = By.xpath("//input[@id='engine6']");
+        //Click chọn 1 trong 2
+        CheckBoxElement(TwoPetrolRadio);
+
+        Assert.assertFalse(driver.findElement(TwoPetrolRadio).isSelected());
+        Assert.assertFalse(driver.findElement(NoTwoPetrolRadio).isSelected());
+
+        CheckBoxElement(NoTwoPetrolRadio);
+
+        Assert.assertFalse(driver.findElement(TwoPetrolRadio).isSelected());
+        Assert.assertFalse(driver.findElement(NoTwoPetrolRadio).isSelected());
+
+
+    }
+    @Test
+    public void test1(){
+        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
+        driver.findElement(By.cssSelector("//input[@id='engine3']")).click();
+    }
+
     @AfterClass
     public void afterClass() {
         driver.quit();
+    }
+
+    //Hàm checkBox và không checkBox
+    public void CheckBoxElement(By Xpath){
+        //Nếu như element chưa đc chọn thì click
+        if (driver.findElement(Xpath).isSelected()){//true mới vào thân hàm if
+            driver.findElement(Xpath).click();
+        }
+        sleepInsecons(3);
+    }
+
+    public void UnCheckBoxElement(By Xpath){
+        //Nếu như element đã đc chọn thì click lần nữa cho thành bỏ chọn
+        if (!driver.findElement(Xpath).isSelected()){//true mới vào thân hàm if
+            driver.findElement(Xpath).click();
+        }
+        sleepInsecons(3);
     }
 
     public void sleepInsecons(long timeInsecons) {
