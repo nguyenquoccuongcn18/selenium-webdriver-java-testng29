@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 
 public class Topic10_11_Button_Radio_Checkbox {
@@ -25,6 +26,7 @@ public class Topic10_11_Button_Radio_Checkbox {
         driver.manage().window().maximize();
 
     }
+
     @Test
     public void TC_01_Egov_Button() {
         driver.get("https://egov.danang.gov.vn/reg");
@@ -50,7 +52,7 @@ public class Topic10_11_Button_Radio_Checkbox {
         //Convert kiểu Hexa
         String RegColorButtonBackgroundHexa = loginButtonBackgroundColour.asHex();
         System.out.println("background-color" + " - " + RegColorButtonBackgroundHexa.toLowerCase());
-        Assert.assertEquals(RegColorButtonBackgroundHexa,"#ef5a00");
+        Assert.assertEquals(RegColorButtonBackgroundHexa, "#ef5a00");
 
         //Assert.assertEquals(getBackgroundColorCss);
     }
@@ -65,11 +67,11 @@ public class Topic10_11_Button_Radio_Checkbox {
         //chạy thử xem ra màu gì để verify
         System.out.println(LoginButton.getCssValue("background-color"));
 
-        Assert.assertEquals(Color.fromString(LoginButton.getCssValue("background-color")).asHex().toLowerCase(),"#000000");
+        Assert.assertEquals(Color.fromString(LoginButton.getCssValue("background-color")).asHex().toLowerCase(), "#000000");
         System.out.println("backgroundclor" + LoginButton);
 
         //nhập email và password
-        String UsernameLogin="cuong0123@gmail.com",Pass="123444";
+        String UsernameLogin = "cuong0123@gmail.com", Pass = "123444";
         driver.findElement(By.cssSelector("input#login_username")).sendKeys(UsernameLogin);
         driver.findElement(By.cssSelector("input#login_password")).sendKeys(Pass);
         Assert.assertTrue(driver.findElement(By.cssSelector("button.fhs-btn-login")).isEnabled());
@@ -79,12 +81,12 @@ public class Topic10_11_Button_Radio_Checkbox {
 
         System.out.println("background" + "-" + LoginUserPass);
 
-        Assert.assertEquals(Color.fromString(LoginUserPass.getCssValue("background-color")).asHex().toLowerCase(),"#c92127");
+        Assert.assertEquals(Color.fromString(LoginUserPass.getCssValue("background-color")).asHex().toLowerCase(), "#c92127");
 
     }
 
     @Test
-    public void TC_03_CheckBox(){
+    public void TC_03_CheckBox() {
         driver.get("https://demos.telerik.com/kendo-ui/checkbox/index");
         By dualZoneCheckBox = By.xpath("//input[@id='eq3']");
         By TrueCheckBox = By.xpath("//input[@id='eq1']");
@@ -100,8 +102,9 @@ public class Topic10_11_Button_Radio_Checkbox {
         Assert.assertTrue(driver.findElement(By.xpath("//input[@id='eq1']")).isSelected());
 
     }
+
     @Test
-    public void TC_04_Radio(){
+    public void TC_04_Radio() {
         driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
         By TwoPetrolRadio = By.xpath("//input[@id='engine3']");
         By NoTwoPetrolRadio = By.xpath("//input[@id='engine6']");
@@ -118,11 +121,44 @@ public class Topic10_11_Button_Radio_Checkbox {
 
 
     }
+
     @Test
-    public void test1(){
-        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
-        driver.findElement(By.cssSelector("//input[@id='engine3']")).click();
+    public void TC04_Selectall_or_check1inAll() {
+        driver.get("https://automationfc.github.io/multiple-fields/");
+        List<WebElement> CheckBoxAll = (driver.findElements(By.cssSelector("span.form-checkbox-item")));
+        //div.form-single-colum input[type='checkbox']
+
+        //chọn all check box trên màn hình
+        for (WebElement checboxkall : CheckBoxAll) {
+            //nếu chưa check
+            if (!checboxkall.isSelected()) {
+                //nảy vô check
+                checboxkall.click();
+                sleepInsecons(5);
+            }
+
+        }
+        driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
+
+
+        sleepInsecons(3);
+
+
+        //Verify all checkbox
+        for (WebElement checboxkall : CheckBoxAll) {
+            if (checboxkall.getAttribute("value").equals("Heart Attack")&& !checboxkall.isSelected()){
+                checboxkall.click();
+            Assert.assertTrue(checboxkall.isSelected());
+        }else
+            {
+                Assert.assertFalse(checboxkall.isSelected());
+
+            }
+        }
     }
+
+
 
     @AfterClass
     public void afterClass() {
