@@ -1,6 +1,7 @@
 package Part03;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -125,7 +126,7 @@ public class Topic10_11_Button_Radio_Checkbox {
     @Test
     public void TC04_Selectall_or_check1inAll() {
         driver.get("https://automationfc.github.io/multiple-fields/");
-        List<WebElement> CheckBoxAll = (driver.findElements(By.cssSelector("span.form-checkbox-item")));
+        List<WebElement> CheckBoxAll = (driver.findElements(By.cssSelector("div.form-single-colum input[type='checkbox']")));
         //div.form-single-colum input[type='checkbox']
 
         //chọn all check box trên màn hình
@@ -134,10 +135,10 @@ public class Topic10_11_Button_Radio_Checkbox {
             if (!checboxkall.isSelected()) {
                 //nảy vô check
                 checboxkall.click();
-                sleepInsecons(5);
             }
 
         }
+        //xóa coockie
         driver.manage().deleteAllCookies();
         driver.navigate().refresh();
 
@@ -147,7 +148,7 @@ public class Topic10_11_Button_Radio_Checkbox {
 
         //Verify all checkbox
         for (WebElement checboxkall : CheckBoxAll) {
-            if (checboxkall.getAttribute("value").equals("Heart Attack")&& !checboxkall.isSelected()){
+            if (checboxkall.getAttribute("value").equals("Heart Attack") && !checboxkall.isSelected()){
                 checboxkall.click();
             Assert.assertTrue(checboxkall.isSelected());
         }else
@@ -160,34 +161,70 @@ public class Topic10_11_Button_Radio_Checkbox {
 
 
 
-    @Test
-    public void TC_05_Test() {
-        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
-        driver.findElement(By.xpath(" //input[@id='engine2']")).click();
-    }
-
-
-
-
-
-
 
     @Test
-    public void TC_06_Radio() {
+    public void TC_05_Radio() {
         driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
         sleepInsecons(3);
         driver.findElement(By.xpath(" //input[@id='engine2']")).click();
         Assert.assertTrue(driver.findElement(By.xpath(" //input[@id='engine2']")).isSelected());
-
-
-
-        //driver.findElement(By.xpath(" //input[@id='engine4']")).click();
         //Click chọn 1 trong 2
 
+        sleepInsecons(3);
+        driver.findElement(By.xpath(" //input[@id='engine2']")).click();
+        Assert.assertTrue(driver.findElement(By.xpath(" //input[@id='engine2']")).isSelected());
+
+    }
+
+
+    @Test
+    public void TC_06_Custom_Radio(){
+        driver.get("https://tiemchungcovid19.gov.vn/portal/register-person");
+        //case 1: Dùng thẻ input để click -> thẻ input bị che mờ bởi 1 element khác -> Failed
+        //isSelected : only applies to INPUT element
+
+        //case 2:
+        //dùng thẻ div bên ngoài để click
+        //dùng thẻ div để verify
+        driver.findElement(By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/div[@class='mat-radio-out-circle']")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/div[@class='mat-radio-out-circle']")).isSelected());
+        //case 3 :
+        //dùng thẻ div bên ngoài để click->pass
+        //Dùng thẻ input để verify->pass
+        //1 element mà cần define tới 2 locator thì sau này maitain bảo trì mất tgian
+        driver.findElement(By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/div[@class='mat-radio-out-circle']")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/input")).isSelected());
+        //Case 4 :
+        //dùng input click ->dùng Javascript JS
+        //dùng input verify ->         isSelected : only applies to INPUT element
+        //dùng 1 locator
+        By RegisterRadio = By.xpath(("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/input"));
+
+        ((JavascriptExecutor)driver).executeScript("arguments[0].click();",RegisterRadio);
+        Assert.assertTrue(driver.findElement(RegisterRadio).isSelected());
+
+    }
+    @Test
+    public void TC_07_Custom_Checkbox_Radio(){
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+
+        By CanThoRadio = By.xpath("//div[@aria-label='Cần Thơ']");
+
+//* Cách 1
+        //Verify is not selected
+        Assert.assertEquals(driver.findElement(CanThoRadio).getAttribute("aria-checked="),"false");
+
+        //Dùng kiểu string verify với boolean
+        String CanThoRadioVerify = driver.findElement(CanThoRadio).getAttribute("aria-checked=");
+        Assert.assertEquals(CanThoRadioVerify, "false");
+
+//** Cách 2
+        Assert.assertTrue(driver.findElement(By.xpath("//div[@aria-label='Cần Thơ' and @aria-checked='false']")).isDisplayed());
 
 
 
     }
+
 
     @AfterClass
     public void afterClass() {
