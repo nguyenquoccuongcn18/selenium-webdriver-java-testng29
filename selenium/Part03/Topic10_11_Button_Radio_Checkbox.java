@@ -106,17 +106,17 @@ public class Topic10_11_Button_Radio_Checkbox {
     @Test
     public void TC_04_Radio() {
         driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
-        By TwoPetrolRadio = By.xpath("//input[@id='engine3']");
-        By NoTwoPetrolRadio = By.xpath("//input[@id='engine6']");
+        By TwoPetrolRadio = By.xpath(" //input[@id='engine1']");
+        By NoTwoPetrolRadio = By.xpath(" //input[@id='engine4']");
         //Click chọn 1 trong 2
         CheckBoxElement(TwoPetrolRadio);
 
-        Assert.assertFalse(driver.findElement(TwoPetrolRadio).isSelected());
+        Assert.assertTrue(driver.findElement(TwoPetrolRadio).isSelected());
         Assert.assertFalse(driver.findElement(NoTwoPetrolRadio).isSelected());
 
         CheckBoxElement(NoTwoPetrolRadio);
 
-        Assert.assertFalse(driver.findElement(TwoPetrolRadio).isSelected());
+        Assert.assertTrue(driver.findElement(TwoPetrolRadio).isSelected());
         Assert.assertFalse(driver.findElement(NoTwoPetrolRadio).isSelected());
 
 
@@ -159,6 +159,35 @@ public class Topic10_11_Button_Radio_Checkbox {
     }
 
 
+
+    @Test
+    public void TC_05_Test() {
+        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
+        driver.findElement(By.xpath(" //input[@id='engine2']")).click();
+    }
+
+
+
+
+
+
+
+    @Test
+    public void TC_06_Radio() {
+        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
+        sleepInsecons(3);
+        driver.findElement(By.xpath(" //input[@id='engine2']")).click();
+        Assert.assertTrue(driver.findElement(By.xpath(" //input[@id='engine2']")).isSelected());
+
+
+
+        //driver.findElement(By.xpath(" //input[@id='engine4']")).click();
+        //Click chọn 1 trong 2
+
+
+
+
+    }
 
     @AfterClass
     public void afterClass() {
