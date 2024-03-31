@@ -1,9 +1,15 @@
 package Part03;
 
+
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v85.network.Network;
+import org.openqa.selenium.devtools.v85.network.model.Headers;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -12,6 +18,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 
 public class Topic12_Handle_Alert {
@@ -94,6 +103,30 @@ public class Topic12_Handle_Alert {
 
         Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
 
+    }
+    @Test
+    public void TC_06_Authentication_Selenium_version4() {
+        //Thư viện alert không sử dụng được cho Authen Alert được  vì tính bảo mật
+        //Chrome Dev tool protocol (CDP) /chrome Edge chỉ 2 này dc support
+
+// Get DevTool object
+        DevTools devTools = ((HasDevTools) driver).getDevTools();
+
+        // Start new session
+        devTools.createSession();
+
+        // Enable the Network domain of devtools
+        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+
+        // Encode username/ password
+        Map<String, Object> headers = new HashMap<String, Object>();
+        String basicAuthen = "Basic " + new String(new Base64().encode(String.format("%s:%s", "admin", "admin").getBytes()));
+        headers.put("Authorization", basicAuthen);
+
+        // Set to Header
+        devTools.send(Network.setExtraHTTPHeaders(new Headers(headers)));
+
+        driver.get("https://the-internet.herokuapp.com/basic_auth");
     }
 
     @AfterClass
