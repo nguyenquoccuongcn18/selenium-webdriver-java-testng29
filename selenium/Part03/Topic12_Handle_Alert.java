@@ -1,7 +1,7 @@
 package Part03;
 
 
-
+import org.bouncycastle.util.encoders.Base64;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
