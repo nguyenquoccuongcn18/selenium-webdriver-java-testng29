@@ -34,4 +34,11 @@ public class Topic_Teamplate {
     public void afterClass() {
         driver.quit();
     }
+    public void sleepInsecons(long timeInsecons) {
+        try {
+            Thread.sleep(timeInsecons * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
