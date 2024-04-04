@@ -139,6 +139,17 @@ public class Topic15_User_Interaction_II {
 
     }
 
+    @Test
+    public void TC_06_DoubleClick(){
+        driver.get("https://automationfc.github.io/basic-form/index.html");
+        //Nếu là firefox
+        //Cần croll tới element thì mới doubleclick được // hàm scrolltoelement
+        actions.doubleClick(driver.findElement(By.xpath("//button[text()='Double click me']"))).perform();
+
+       Assert.assertEquals(driver.findElement(By.xpath("//p[text()='Hello Automation Guys!']")).getText(),"Hello Automation Guys!");
+
+    }
+
     @AfterClass
     public void afterClass() {
         driver.quit();
