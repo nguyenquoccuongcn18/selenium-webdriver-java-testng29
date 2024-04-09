@@ -18,11 +18,11 @@ public class Topic_Teamplate {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().window().maximize();
-        driver.get("https://www.facebook.com/");
+
     }
     @Test
     public void TC_01_Element() {
-
+        driver.get("https://www.facebook.com/");
     }
 
     @Test
