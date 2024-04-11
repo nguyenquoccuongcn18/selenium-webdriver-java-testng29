@@ -2,7 +2,10 @@ package Part03;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -47,7 +50,42 @@ public class Topic20_iFrame {
     }
 
     @Test
-    public void TC_02_Logo() {
+    public void TC_02_Iframe_Formsite() {
+        driver.get("https://www.formsite.com/templates/education/campus-safety-survey/");
+        driver.findElement(By.cssSelector("div#imageTemplateContainer>img")).click();
+
+
+        //Check iframe hiển thị
+        WebElement formIframe = driver.findElement(By.cssSelector("div#formTemplateContainer>iframe"));
+        Assert.assertTrue(formIframe.isDisplayed());
+
+        //Dùng webelement trong tương lai thay đổi code đỡ maitain
+        driver.switchTo().frame(formIframe);
+
+        new Select(driver.findElement(By.cssSelector("select#RESULT_RadioButton-2"))).selectByVisibleText("Junior");
+
+        //Thao tác ra lại trang A
+        driver.switchTo().defaultContent();
+
+        //Thao tác 1 element bên ngoài iframe Trang A
+        driver.findElement(By.cssSelector("nav.header--desktop-floater a.menu-item-login")).click();
+
+        driver.findElement(By.cssSelector("a[id='link-login-google'] span[class='auth-card__social-text']")).click();
+        sleepInsecons(3);
+
+    }
+    @Test
+    public void TC_02_Frame_HDFCBank() {
+        driver.get("https://netbanking.hdfcbank.com/netbanking/");
+        driver.switchTo().frame("login_page");
+
+        driver.findElement(By.cssSelector("input.form-control")).sendKeys("Ronaldo");
+
+
+        driver.findElement(By.cssSelector("a.login-btn")).click();
+        driver.findElement(By.cssSelector("a.loginBtn")).click();
+
+
 
     }
 
