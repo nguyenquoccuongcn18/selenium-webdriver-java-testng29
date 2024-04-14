@@ -1,8 +1,6 @@
 package Part03;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,6 +15,8 @@ import java.util.Set;
 public class Topic21_Window_Tab {
     WebDriver driver;
     WebDriverWait explicitWait;
+    JavascriptExecutor jsExecutor;
+
 
     @BeforeClass
     public void BeforeClass() {
@@ -24,6 +24,7 @@ public class Topic21_Window_Tab {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().window().maximize();
+
 
     }
     @Test
@@ -78,7 +79,7 @@ public class Topic21_Window_Tab {
     @Test
     public void TC_03_techpanda(){
         driver.get("http://live.techpanda.org/");
-        driver.findElement(By.xpath("//a[normalize-space()='Mobile']")).click();
+        driver.findElement(By.xpath("//a[@normalize-space()='Mobile']")).click();
 
         driver.findElement(By.xpath("//li[3]//div[1]//div[3]//ul[1]//li[2]//a[1]")).click();
         Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"The product Sony Xperia has been added to comparison list.");
@@ -184,5 +185,17 @@ public class Topic21_Window_Tab {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+    public WebElement getElement(String locator) {
+        return driver.findElement(By.xpath(locator));
+    }
+
+
+    public void hightlightElement(String locator) {
+        WebElement element = getElement(locator);
+        String originalStyle = element.getAttribute("style");
+        jsExecutor.executeScript("arguments[0].setAttribute('style', arguments[1])", element, "border: 2px solid red; border-style: dashed;");
+        sleepInsecons(2);
+        jsExecutor.executeScript("arguments[0].setAttribute('style', arguments[1])", element, originalStyle);
     }
 }
