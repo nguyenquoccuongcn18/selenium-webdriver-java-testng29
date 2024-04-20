@@ -16,6 +16,7 @@ import java.time.Duration;
 public class Topic19_Shadow {
     WebDriver driver;
 
+
     @BeforeClass
     public void BeforeClass() {
 
@@ -41,7 +42,7 @@ public class Topic19_Shadow {
         WebElement ShadowCheckBox = ShadowRootConText.findElement(By.cssSelector("input[type='checkbox']"));
         Assert.assertFalse(ShadowCheckBox.isSelected());
 
-        // muốn tìm tiếp theo cứ xem nó có shadow mới không thì tiếp tục tìm rồi get ra
+        // muốn tìm tiếp theo cứ xem nó cóa shadow mới không thì tiếp tục tìm rồi get ra
         //lấy ShadowRootConText để đi tìm tiếp cái shadow thứ 2
         WebElement NestedShadowHostElement = ShadowRootConText.findElement(By.cssSelector("div#nested_shadow_host"));
         SearchContext NestedShadowRootConText = NestedShadowHostElement.getShadowRoot();
@@ -56,7 +57,7 @@ public class Topic19_Shadow {
 
     @Test
     public void TC_02_Logo() {
-        driver.get("https://shopee.vn/");
+        driver.get("https://skills.kynaenglish.vn/");
         sleepInsecons(3);
     }
 

@@ -227,6 +227,15 @@ public class Topic15_User_Interaction_II {
         }
     }
 
+    @Test
+    public void TC_08_DragDropHTML5_Css1() throws IOException {
+        driver.get("https://skills.kynaenglish.vn/");
+        actions.keyDown(Keys.ESCAPE).perform();
+        sleepInsecons(3);
+
+
+    }
+
     @AfterClass
     public void afterClass() {
         driver.quit();
