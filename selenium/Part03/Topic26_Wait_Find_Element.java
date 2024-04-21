@@ -22,7 +22,7 @@ public class Topic26_Wait_Find_Element {
 
         driver = new ChromeDriver();
         //ImplicitWait
-        //Set Implicit selenium Ver4.X trở lên
+        //Set Implicit selenium Ver4.X trở lên/
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         //Set Implicit selenium Ver3.X trở xuống
