@@ -2,6 +2,7 @@ package Part03;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -10,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 
 
 public class Topic26_Wait_Find_Element {
@@ -53,15 +55,48 @@ public class Topic26_Wait_Find_Element {
         //Chờ hết timeout 10s
         //Trong thời gian chờ 10s thì cứ mỗi nữa giây sẽ tìm lại
         //Nếu tìm thấy element thì trả về element rồi qua step tiếp theo
+        // Tìm lại k thấy thì fail và throw Exception
         //Các step còn lại k chạy nữa
-        driver.findElement(By.cssSelector("input#not_found"));
+        driver.findElement(By.cssSelector("input[name='reg_email__ ']"));
 
 
 
     }
 
     @Test
-    public void TC_02_Logo() {
+    public void TC_02_FindElements() {
+        List<WebElement> elementList;
+
+        //Case 1 : Element được tìm thấy chỉ có 1
+        //ko cần chờ hết timeout 10s
+        //Trả về 1 list element chứa đúng 1 element
+        System.out.println("Start datetimenow" + getDateTimeNow());
+        elementList = driver.findElements(By.cssSelector("input#email"));
+        System.out.println("List have:" + elementList.size());
+        System.out.println("Finish datetimenow" + getDateTimeNow());
+
+        //Case 2 : Element được tìm thấy nhưng có nhiều hơn 1
+        //ko cần chờ hết timeout 10s
+        //Trả về 1 list element chứa nhiều element
+        System.out.println("Start datetimenow" + getDateTimeNow());
+        elementList = driver.findElements(By.cssSelector("input[type='text'],[type=password]"));
+        System.out.println("List have:" + elementList.size());
+        System.out.println("Finish datetimenow" + getDateTimeNow());
+
+        //Case 3 :Element không được tìm thấy
+        //Chờ hết timeouts 10s
+        //Mỗi nữa giây tìm lại 1 lan
+        //Nếu trong tgian tìm lại mà thấy element thì cũng trả về List chứa các element đó
+        //Nếu hết tgian tìm lại mà ko thấy thì trả về list rỗng và lo đánh fail testcase
+        //Qua step tiep theo
+        System.out.println("Start datetimenow" + getDateTimeNow());
+        elementList = driver.findElements(By.cssSelector("input[name='reg_email__ ']"));
+        System.out.println("List have:" + elementList.size());
+        System.out.println("Finish datetimenow" + getDateTimeNow());
+
+
+
+
 
     }
 
