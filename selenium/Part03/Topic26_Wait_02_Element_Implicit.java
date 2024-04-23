@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 
-public class Topic27_Wait_02_Element_Implicit {
+public class Topic26_Wait_02_Element_Implicit {
     WebDriver driver;
 
     @BeforeClass
