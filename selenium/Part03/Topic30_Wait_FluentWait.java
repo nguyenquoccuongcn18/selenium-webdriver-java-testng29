@@ -15,6 +15,9 @@ import java.util.function.Function;
 public class Topic30_Wait_FluentWait {
     WebDriver driver;
 
+    private long fullTimeoutInSeconds = 30 ;
+    private long pollingTimoutInSeconds = 300 ;
+
 
     FluentWait <WebDriver> fluentWait ;
     FluentWait <WebElement> FluentElement ;
@@ -89,25 +92,35 @@ public class Topic30_Wait_FluentWait {
 
     @Test
     public void TC_02_Logo() {
+        //Viết gọi lại dùng hàm waitandFindElement
         driver.get("https://automationfc.github.io/dynamic-loading/");
-        driver.findElement(By.cssSelector("div#start>button")).click();
+        waitandFindElement(By.cssSelector("div#start>button")).click();
 
-        //Chờ cho Hello word! text hiển thị trong vòng 10s
+        String helloText = waitandFindElement(By.xpath("//div[@id='finish']/h4")).getText();
+        Assert.assertEquals(helloText,"Hello World!");
+
+    }    @Test
+    public void TC_03_Logo() {
+        driver.get("https://automationfc.github.io/dynamic-loading/");
+       WebElement countdownTime = driver.findElement(By.cssSelector("javascript_countdown_time"));
+
+       FluentElement = new FluentWait<WebElement>(countdownTime);
 
         fluentWait.withTimeout(Duration.ofSeconds(20))
                 .pollingEvery(Duration.ofMillis(100))
                 .ignoring(NoSuchElementException.class);
 
-        fluentWait.until(new Function<WebDriver, Boolean>() {
-                    @Override
-                    public Boolean apply(WebDriver webDriver) {
-                        return webDriver.findElement(By.cssSelector("div#finish>h4")).isDisplayed();
-                    }
-                });
-
-         Assert.assertEquals(driver.findElement(By.cssSelector("div#finish>h4")).getText(),"Hello World!");
+        FluentElement.until(new Function<WebElement, Boolean>() {
+            @Override
+            public Boolean apply(WebElement Element) {
+                String text = Element.getText();
+                System.out.println(text);
+                return text.endsWith("00");
+            }
+        });
 
     }
+
 
     @AfterClass
     public void afterClass() {
@@ -119,5 +132,21 @@ public class Topic30_Wait_FluentWait {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+// Hàm fluent Wait
+    public WebElement waitandFindElement (By locator){
+        FluentWait <WebDriver> fluentDriver = new FluentWait<WebDriver>(driver);
+        fluentWait.withTimeout(Duration.ofSeconds(20))
+                .pollingEvery(Duration.ofMillis(100))
+                .ignoring(NoSuchElementException.class);
+
+       return fluentDriver.until(new Function<WebDriver, WebElement>() {
+
+          @Override
+           public WebElement apply(WebDriver webDriver) {
+               return webDriver.findElement(locator);
+           }
+
+       });
     }
 }
